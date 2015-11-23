@@ -106,7 +106,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    config: _react2['default'].PropTypes.object,
 	    content: _react2['default'].PropTypes.string,
 	    id: _react2['default'].PropTypes.string,
-	    className: _react2['default'].PropTypes.string
+	    className: _react2['default'].PropTypes.string,
+	    placeholder: _react2['default'].PropTypes.string
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -129,6 +130,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (!(0, _lodashLangIsEqual2['default'])(this.props.config, nextProps.config)) {
 	      this._init(nextProps.config, nextProps.content);
 	    }
+	    if (!(0, _lodashLangIsEqual2['default'])(this.props.content, nextProps.content)) {
+	      this._updateContent(nextProps.content);
+	    }
 	    if (!(0, _lodashLangIsEqual2['default'])(this.props.id, nextProps.id)) {
 	      this.id = nextProps.id;
 	    }
@@ -150,7 +154,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }) : _react2['default'].createElement('textarea', {
 	      id: this.id,
 	      className: this.props.className,
-	      defaultValue: this.props.content
+	      defaultValue: this.props.content,
+	      placeholder: this.props.placeholder
 	    });
 	  },
 	
@@ -188,6 +193,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (0, _reactDom.findDOMNode)(this).style.hidden = '';
 	
 	    this._isInit = true;
+	  },
+	
+	  _updateContent: function _updateContent(content) {
+	    if (this._isInit) {
+	      if (tinymce.activeEditor) {
+	        tinymce.activeEditor.setContent(content);
+	      }
+	    }
 	  },
 	
 	  _remove: function _remove() {
